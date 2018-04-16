@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.core import serializers
-from .models import AddMemberForm, Member, SearchForm, UpdateMemberForm
+from .models import Member
+from .forms import AddMemberForm, SearchForm, UpdateMemberForm
 import datetime
 import dateutil.relativedelta as delta
 import dateutil.parser as parser
