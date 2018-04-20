@@ -1,0 +1,13 @@
+/* Mobile styles */
+
+/* Member styles */
+/* TODO: No funca */
+@media all and (min-width: 481px) {
+    .button.btn.btn-info.btn-fill.btn-wd {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+/* End of member styles */
