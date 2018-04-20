@@ -3,7 +3,7 @@
 <div class="card">
     <div class="header">
         <h4 class="title">{% trans 'Lista de miembros activos' %}
-            <button type="submit" class="btn btn-info btn-fill btn-wd pull-right">{% trans 'Nuevo Miembro' %}</button>
+            <button type="submit" class="btn btn-info btn-fill btn-wd pull-right"><i class="ti-user"></i> {% trans 'Agregar Miembro' %}</button>
         </h4>
         <p class="category">{% trans 'Los miembros activos son los quienes tienen la cuota al día' %}</p>
     </div>
@@ -24,19 +24,13 @@
                 <td>{{ member.get_subscription_type_display }}</td>
                 <td>
                     {% if member.fee_status == 'paid' %}
-                    <span class="icon-checkmark" style="color: green"></span>
+                    <span class="ti-check" style="color: green"></span>
                     {% else %}
-                    <span class="icon-cross" style="color: red"></span>
+                    <span class="ti-bell" style="color: red"></span>
                     {% endif %}
                 </td>
               </tr>
             {% endfor %}
-                <!-- <tr>
-                    <td>Dakota Rice</td>
-                    <td>$36,738</td>
-                    <td>Niger</td>
-                    <td>Oud-Turnhout</td>
-                </tr> -->
             </tbody>
         </table>
     </div>
