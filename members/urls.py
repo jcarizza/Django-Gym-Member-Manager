@@ -17,9 +17,9 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('add/', views.add_member, name='add_member'),
+    path('add/', views.add_member, name='members:add-member'),
     path('search/', views.search_member, name='search_member'),
     path('delete/<int:id>/', views.delete_member, name='delete_member'),
     path('update/<int:id>/', views.update_member, name='update_member'),
-    path('', views.members, name='members'),
+    path('', views.ListMembers.as_view(), name='members:member-list'),
 ]

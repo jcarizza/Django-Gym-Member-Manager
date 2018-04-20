@@ -7,6 +7,17 @@ import dateutil.relativedelta as delta
 import dateutil.parser as parser
 from django.core.files.storage import FileSystemStorage
 from payments.models import Payments
+from django.views.generic import (
+    ListView,
+    CreateView,
+)
+
+
+class ListMembers(ListView):
+    """List all members."""
+
+    model = Member
+    paginate_by = 50
 
 # Create your views here.
 def members(request):
@@ -29,6 +40,7 @@ def members(request):
         'subs_end_today_count': subs_end_today_count,
     }
     return render(request, 'members/members.html', context)
+
 
 def add_member(request):
     view_all = Member.objects.all()

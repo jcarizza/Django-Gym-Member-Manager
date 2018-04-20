@@ -26,6 +26,7 @@ BATCH = (
 	('evening', 'Evening'),
 )
 
+
 class Member(models.Model):
 	member_id = models.AutoField(primary_key=True)
 	first_name = models.CharField(max_length=50)
