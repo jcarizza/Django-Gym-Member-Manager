@@ -1,88 +1,64 @@
-from django.db import models
+from django.utils.translation import ugettext_lazy as _
 from django.forms import ModelForm
+from django.db import models
 from django import forms
+from members.mixins import MembershipMixin
+
 import datetime
 
-SUBSCRIPTION_TYPE_CHOICES = (
-    ('gym', 'Gym'),
-    ('cross_fit', 'Cross Fit'),
-    ('gym_and_cross_fit', 'Gym + Cross Fit'),
-)
 
-SUBSCRIPTION_PERIOD_CHOICES = (
-    ('1', '1 Month'),
-    ('3', '3 Months'),
-    ('6', '6 Months'),
-    ('12', '12 Months'),
-)
-
-FEE_STATUS = (
-	('paid', 'Paid'),
-	('pending', 'Pending'),
-)
-
-BATCH = (
-	('morning', 'Morning'),
-	('evening', 'Evening'),
-)
+class Gym(MembershipMixin):
+    """A place, a gym."""
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=300, blank=True)
 
 
-class Member(models.Model):
-	member_id = models.AutoField(primary_key=True)
-	first_name = models.CharField(max_length=50)
-	last_name = models.CharField(max_length=50)
-	mobile_number = models.IntegerField(unique=True)
-	email = models.EmailField(null=True, blank=True)
-	address = models.CharField(max_length=300, blank=True)
-	admitted_on = models.DateField(auto_now_add=True)
-	registration_date = models.DateField()
-	registration_upto = models.DateField()
-	subscription_type  = models.CharField(
-									max_length=30,
-									choices=SUBSCRIPTION_TYPE_CHOICES,
-									default=SUBSCRIPTION_TYPE_CHOICES[0][0])
-	subscription_period = models.CharField(
-									max_length=30,
-									choices=SUBSCRIPTION_PERIOD_CHOICES,
-									default=SUBSCRIPTION_PERIOD_CHOICES[0][0])
-	amount = models.IntegerField()
-	fee_status = models.CharField(max_length=30, choices=FEE_STATUS, default=FEE_STATUS[0][0])
-	batch = models.CharField(max_length=30, choices=BATCH, default=BATCH[0][0])
-	photo = models.FileField(upload_to='photos/', blank=True)
-	notification = models.IntegerField(default=2, blank=True)
-
-	def __str__(self):
-		return self.first_name + ' ' + self.last_name
+class Subscription(models.Model):
+    """Subscription."""
+    name = models.CharField(max_length=100)
 
 
-class AddMemberForm(ModelForm):
-	class Meta:
-		model = Member
-		# fields = ['first_name', 'last_name', 'mobile_number', 'email', 'address', 'subscription_type', 'subscription_period', 'amount']
-		fields = '__all__'
-		exclude = ['registration_upto']
-		widgets = {
-			'registration_date': forms.DateInput(attrs={'type': 'date'}),
-			'registration_upto': forms.DateInput(attrs={'type': 'date'}),
-		}
+class Member(MembershipMixin):
 
-	def clean_mobile_number(self, *args, **kwargs):
-		mobile_number = self.cleaned_data.get('mobile_number')
-		if Member.objects.filter(mobile_number=mobile_number).exists():
-			raise forms.ValidationError('This mobile number has already been registered.')
-		else:
-			return mobile_number
+    BATCH = (
+        ('morning', _('Mañana')),
+        ('evening', _('Tarde')),
+        ('night', _('Noche')),
+        ('full', _('Fulltime')),
+    )
 
-class SearchForm(forms.Form):
-		search = forms.CharField(label='Search Member', max_length=100)
+    SUBSCRIPTION_PERIOD_CHOICES = (
+        ('1', '1 Month'),
+        ('3', '3 Months'),
+        ('6', '6 Months'),
+        ('12', '12 Months'),
+    )
 
-class UpdateMemberForm(forms.Form):
-	first_name = forms.CharField(max_length=50)
-	last_name = forms.CharField(max_length=50)
-	registration_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
-	registration_upto = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
-	subscription_type  = forms.ChoiceField(choices=SUBSCRIPTION_TYPE_CHOICES)
-	subscription_period = forms.ChoiceField(choices=SUBSCRIPTION_PERIOD_CHOICES)
-	fee_status = forms.ChoiceField(choices=FEE_STATUS)
-	amount = forms.IntegerField()
-	photo = forms.FileField(label='Update Photo', required=False)
+    # Personal info
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    mobile = models.IntegerField(unique=True)
+    emerency_contact = models.IntegerField(blank=True, null=True)
+    email = models.EmailField(null=True, blank=True)
+    address = models.CharField(max_length=300, blank=True)
+
+    # Subscription
+    subscription_type = models.ForeignKey(
+        Subscription,
+        models.SET_NULL,
+        blank=True, null=True
+    )
+    subscription_period = models.CharField(
+        max_length=30,
+        choices=SUBSCRIPTION_PERIOD_CHOICES,
+        default=SUBSCRIPTION_PERIOD_CHOICES[0][0]
+    )
+    batch = models.CharField(
+        max_length=30,
+        choices=BATCH,
+        default=BATCH[0][0]
+    )
+    photo = models.FileField(upload_to='photos/', blank=True)
+
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name

@@ -3,7 +3,7 @@
 <div class="card">
     <div class="header">
         <h4 class="title">{% trans 'Lista de miembros activos' %}
-            <button type="submit" class="btn btn-info btn-fill btn-wd pull-right"><i class="ti-user"></i> {% trans 'Agregar Miembro' %}</button>
+            <a href="{% url 'add-member' %}" class="btn btn-info btn-fill btn-wd pull-right"><i class="ti-user"></i> {% trans 'Agregar Miembro' %}</a>
         </h4>
         <p class="category">{% trans 'Los miembros activos son los quienes tienen la cuota al día' %}</p>
     </div>
@@ -16,14 +16,14 @@
                 <th>{% trans 'Cuota al día' %}</th>
             </thead>
             <tbody>
-            {% for member in members %}
+            {% for member in object_list %}
               <tr>
                 <!-- <th scope="row">{{ forloop.counter }}</th> -->
                 <td><a href="/members/update/{{ member.member_id }}">{{ member.first_name }} {{ member.last_name }}</a></td>
-                <td>{{ member.phone }}</td>
+                <td>{{ member.mobile }}</td>
                 <td>{{ member.get_subscription_type_display }}</td>
                 <td>
-                    {% if member.fee_status == 'paid' %}
+                    {% if member.account_status == 'paid' %}
                     <span class="ti-check" style="color: green"></span>
                     {% else %}
                     <span class="ti-bell" style="color: red"></span>
