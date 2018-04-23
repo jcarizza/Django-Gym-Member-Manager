@@ -1,24 +1,43 @@
-from django.utils.translation import ugettext_lazy as _
-from django.forms import ModelForm
-from django.db import models
-from django import forms
-from members.mixins import MembershipMixin
+"""Members models."""
 
-import datetime
+
+from django.utils.translation import ugettext_lazy as _
+from django.db import models
+from members.mixins import (
+    MembershipMixin,
+    PersonalDetailsMixin,
+)
 
 
 class Gym(MembershipMixin):
     """A place, a gym."""
-    name = models.CharField(max_length=100)
-    address = models.CharField(max_length=300, blank=True)
+    name = models.CharField(
+        max_length=100,
+        help_text=_('Nombre del gimnasio')
+    )
+    address = models.CharField(
+        max_length=100,
+        help_text=_('Dirección')
+    )
 
 
-class Subscription(models.Model):
-    """Subscription."""
-    name = models.CharField(max_length=100)
+class GymActivity(models.Model):
+    """Activities given by the gym."""
 
 
-class Member(MembershipMixin):
+class StaffMember(PersonalDetailsMixin):
+    """A staff member from a gym."""
+    gym = models.ForeignKey(
+        Gym,
+        models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    is_owner = models.NullBooleanField()
+
+
+class Member(PersonalDetailsMixin):
+    """A customer from a gym."""
 
     BATCH = (
         ('morning', _('Mañana')),
@@ -34,31 +53,40 @@ class Member(MembershipMixin):
         ('12', '12 Months'),
     )
 
-    # Personal info
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    mobile = models.IntegerField(unique=True)
-    emerency_contact = models.IntegerField(blank=True, null=True)
-    email = models.EmailField(null=True, blank=True)
-    address = models.CharField(max_length=300, blank=True)
+    gym = models.ForeignKey(
+        Gym,
+        on_delete=models.CASCADE,
+        help_text=_('Miembro del gimnasio')
+    )
 
-    # Subscription
-    subscription_type = models.ForeignKey(
-        Subscription,
-        models.SET_NULL,
-        blank=True, null=True
+    emergency_contact = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        help_text=_('Teéfono de contacto en caso de emergencia')
     )
-    subscription_period = models.CharField(
-        max_length=30,
-        choices=SUBSCRIPTION_PERIOD_CHOICES,
-        default=SUBSCRIPTION_PERIOD_CHOICES[0][0]
-    )
+
     batch = models.CharField(
         max_length=30,
         choices=BATCH,
-        default=BATCH[0][0]
+        default=BATCH[0][0],
+        help_text=('Turno')
     )
-    photo = models.FileField(upload_to='photos/', blank=True)
+
+    photo = models.FileField(
+        upload_to='photos/',
+        null=True,
+        blank=True,
+        help_text=_('Foto')
+    )
+    medical_certificate = models.FileField(
+        upload_to='medical_certificate/',
+        null=True,
+        blank=True,
+        help_text=_('Certificado médico')
+    )
+
+    # TODO: Implement subscriptions
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
