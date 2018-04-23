@@ -23,7 +23,7 @@ class PersonalDetailsMixin(models.Model):
     )
     email = models.EmailField()
 
-    class Meta:
+    class Meta:  # pylint: disable=C0111
         abstract = True
 
 
@@ -43,5 +43,5 @@ class MembershipMixin(models.Model):
     registration_date = models.DateField()
     registration_upto = models.DateField()
 
-    class Meta:
+    class Meta: # pylint: disable=C0111
         abstract = True
