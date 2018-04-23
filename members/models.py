@@ -86,6 +86,11 @@ class Member(PersonalDetailsMixin):
         help_text=_('Certificado médico')
     )
 
+    dni = models.CharField(
+        max_length=9,
+        unique=True
+    )
+
     # TODO: Implement subscriptions
 
     def __str__(self):

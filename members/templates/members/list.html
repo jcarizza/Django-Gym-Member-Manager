@@ -11,6 +11,7 @@
         <table class="table table-striped">
             <thead>
                 <th>{% trans 'Nombre' %}</th>
+                <th>{% trans 'DNI' %}</th>
                 <th>{% trans 'Teléfono' %}</th>
                 <th>{% trans 'Actividad' %}</th>
                 <th>{% trans 'Cuota al día' %}</th>
@@ -20,6 +21,7 @@
               <tr>
                 <!-- <th scope="row">{{ forloop.counter }}</th> -->
                 <td><a href="/members/update/{{ member.member_id }}">{{ member.first_name }} {{ member.last_name }}</a></td>
+                <td> {{ member.dni }}</td>
                 <td>{{ member.mobile }}</td>
                 <td>{{ member.get_subscription_type_display }}</td>
                 <td>

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load tags bootstrap4 i18n %}
+
+{% block content %}
+<h1>{% trans "Nuevo pago" %}</h1>
+<form action="" method="post" class="form"> {% csrf_token %}
+  {% bootstrap_form form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">{% trans "Pagar" %}</button>
+  {% endbuttons %}
+</form>
+{% endblock %}
