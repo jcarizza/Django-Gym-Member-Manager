@@ -32,6 +32,7 @@ class StaffMember(PersonalDetailsMixin):
         models.SET_NULL,
         blank=True,
         null=True,
+        related_name='staff_members'
     )
     is_owner = models.NullBooleanField()
 

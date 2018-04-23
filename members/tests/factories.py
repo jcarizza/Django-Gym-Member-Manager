@@ -1,9 +1,7 @@
 """Factories for members app."""
 
-from factory.django import (
-    SubFactory,
-    DjangoModelFactory
-)
+from factory import SubFactory
+from factory.django import DjangoModelFactory
 from django.utils.timezone import datetime
 from members.models import (
     Gym,
@@ -47,4 +45,4 @@ class StaffMemberFactory(DjangoModelFactory):
     address = STAFF_MEMBER_ADDRESS
     email = STAFF_MEMBER_EMAIL
     is_owner = True
-    gym = SubFactory(Gym)
+    gym = SubFactory(GymFactory)
