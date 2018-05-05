@@ -4,10 +4,6 @@
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from members.mixins import (
-    MembershipMixin,
-    PersonalDetailsMixin,
-)
 
 
 class Gym(MembershipMixin):
@@ -48,13 +44,40 @@ class StaffMember(AbstractUser):
         return f"{self.first_name} {self.last_name}"
 
 
-class Member(PersonalDetailsMixin):
+class Member(models.Model):
     """A customer from a gym."""
 
     gym = models.ForeignKey(
         Gym,
         on_delete=models.CASCADE,
         help_text=_('Miembro del gimnasio')
+    )
+
+    first_name = models.CharField(
+        max_length=50,
+        help_text=_('Nombre'))
+
+    last_name = models.CharField(
+        max_length=50,
+        help_text=_('Apellido'))
+
+    cellphone = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        help_text=_('Teléfono Celular')
+    )
+
+    address = models.CharField(
+        blank=True,
+        null=True,
+        max_length=100,
+        help_text=_('Dirección')
+    )
+
+    email = models.EmailField(
+        blank=True,
+        null=True,
     )
 
     emergency_contact = models.CharField(

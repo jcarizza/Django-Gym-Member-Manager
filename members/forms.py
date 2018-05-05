@@ -1,25 +1,48 @@
+"""Member forms."""
+
 from django import forms
-from .models import Member
+from django.utils.translation import ugettext_lazy as _
+from members.models import Member
+
 
 class AddMemberForm(forms.ModelForm):
-    class Meta:
+    """Add a member form."""
+
+    class Meta:  # pylint: disable=C0111
         model = Member
-        # fields = ['first_name', 'last_name', 'mobile_number', 'email', 'address', 'subscription_type', 'subscription_period', 'amount']
-        fields = '__all__'
-        exclude = ['registration_upto']
+        fields = [
+            'first_name',
+            'last_name',
+            'dni',
+            'address',
+            'email',
+            'cellphone',
+            'emergency_contact',
+            'photo',
+            'medical_certificate',
+        ]
         widgets = {
             'registration_date': forms.DateInput(attrs={'type': 'date'}),
-            'registration_upto': forms.DateInput(attrs={'type': 'date'}),
         }
-
-    def clean_mobile_number(self, *args, **kwargs):
-        mobile_number = self.cleaned_data.get('mobile')
-        if Member.objects.filter(mobile_number=mobile).exists():
-            raise forms.ValidationError('This mobile number has already been registered.')
-        else:
-            return mobile_number
-
-class UpdateMemberForm(forms.ModelForm):
-    class Meta:
-        model = Member
-        fields = '__all__'
+        labels = {
+            'first_name': _('Nombre'),
+            'last_name': _('Apellido'),
+            'cellphone': _('Teléfono celular (opcional)'),
+            'address': _('Dirección (opcional)'),
+            'email': _('Email (opcional)'),
+            'gym': _('Gimnasio'),
+            'emergency_contact': _('Telefono en caso de urgencia (opcional)'),
+            'photo': _('Foto del socio (opcional)'),
+            'medical_certificate': _('Certificado médico (opcional)'),
+            'dni': _('DNI')
+        }
+        help_texts = {
+            'first_name': '',
+            'last_name': '',
+            'cellphone': '',
+            'address': '',
+            'photo': '',
+            'emergency_contact': _('En caso de emergencia, nos comunicamos con este número.'),
+            'email': _('Un email de contacto.'),
+            'dni': _('Documento de identidad o número que identifique a esta persona.')
+        }

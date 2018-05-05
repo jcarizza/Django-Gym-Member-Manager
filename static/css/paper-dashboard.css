@@ -39,6 +39,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
   margin: 30px 0 15px; }
 
 h1, .h1 {
+  color: #6495ed;
   font-size: 3.2em; }
 
 h2, .h2 {
@@ -87,7 +88,7 @@ blockquote small {
   font-style: normal; }
 
 .text-muted {
-  color: #DDDDDD; }
+  color: #6c7cff; }
 
 .text-primary, .text-primary:hover {
   color: #427C89; }
@@ -400,7 +401,7 @@ hr {
   width: calc(100% - 260px);
   min-height: 100%; }
   .main-panel > .content {
-    padding: 30px 15px;
+    padding: 0px 15px;
     min-height: calc(100% - 123px); }
   .main-panel > .footer {
     border-top: 1px solid rgba(0, 0, 0, 0.1); }
