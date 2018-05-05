@@ -27,7 +27,6 @@ urlpatterns = [
     path('notifications/', include('notifications.urls')),
     path('reports/', include('reports.urls')),
     path('payments/', include('payments.urls')),
-    # path('', include('accounts.urls')),
     path('', DashboardView.as_view(), name='dashboard'),
 ]
 
