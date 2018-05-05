@@ -21,6 +21,9 @@ class Gym(MembershipMixin):
         help_text=_('Dirección')
     )
 
+    def __str__(self):
+        return f"{self.name}"
+
 
 class GymActivity(models.Model):
     """Activities given by the gym."""
