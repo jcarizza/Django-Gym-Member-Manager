@@ -1,6 +1,7 @@
 """Members views."""
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
     FormView,
@@ -24,3 +25,4 @@ class AddMember(LoginRequiredMixin, FormView):
     fields = '__all__'
     template_name = 'members/add.html'
     form_class = AddMemberForm
+    success_url = reverse_lazy('member-list')
