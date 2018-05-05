@@ -1,7 +1,9 @@
-from django.shortcuts import render
+"""Dashboard views."""
+
 from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class DashboardView(TemplateView):
+class DashboardView(LoginRequiredMixin, TemplateView):
     """Show dashboard."""
     template_name = 'dashboard.html'

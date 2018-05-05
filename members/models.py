@@ -2,6 +2,7 @@
 
 
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from members.mixins import (
     MembershipMixin,
@@ -25,7 +26,7 @@ class GymActivity(models.Model):
     """Activities given by the gym."""
 
 
-class StaffMember(PersonalDetailsMixin):
+class StaffMember(AbstractUser):
     """A staff member from a gym."""
     gym = models.ForeignKey(
         Gym,
@@ -35,24 +36,17 @@ class StaffMember(PersonalDetailsMixin):
         related_name='staff_members'
     )
     is_owner = models.NullBooleanField()
+    email = models.EmailField(unique=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['gym', 'is_owner', 'first_name', 'last_name']
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
 
 
 class Member(PersonalDetailsMixin):
     """A customer from a gym."""
-
-    BATCH = (
-        ('morning', _('Mañana')),
-        ('evening', _('Tarde')),
-        ('night', _('Noche')),
-        ('full', _('Fulltime')),
-    )
-
-    SUBSCRIPTION_PERIOD_CHOICES = (
-        ('1', '1 Month'),
-        ('3', '3 Months'),
-        ('6', '6 Months'),
-        ('12', '12 Months'),
-    )
 
     gym = models.ForeignKey(
         Gym,
@@ -65,13 +59,6 @@ class Member(PersonalDetailsMixin):
         blank=True,
         null=True,
         help_text=_('Teéfono de contacto en caso de emergencia')
-    )
-
-    batch = models.CharField(
-        max_length=30,
-        choices=BATCH,
-        default=BATCH[0][0],
-        help_text=('Turno')
     )
 
     photo = models.FileField(
@@ -91,8 +78,3 @@ class Member(PersonalDetailsMixin):
         max_length=9,
         unique=True
     )
-
-    # TODO: Implement subscriptions
-
-    def __str__(self):
-        return self.first_name + ' ' + self.last_name

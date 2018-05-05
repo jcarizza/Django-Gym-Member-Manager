@@ -40,13 +40,14 @@
 <body>
 
 <div class="wrapper">
-    <div class="sidebar" data-background-color="black" data-active-color="danger">
+    <div class="sidebar" data-background-color="black" data-active-color="warning">
 
     <!--
 		Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
 		Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
 	-->
 
+        {% if user.is_authenticated %}
     	<div class="sidebar-wrapper">
             <div class="logo">
                 <a href="{% url 'dashboard' %}" class="simple-text">
@@ -86,11 +87,13 @@
                     </a>
                 </li>
             </ul>
-    	</div>
+        </div>
+        {% endif %}
     </div>
 
     <div class="main-panel">
         <nav class="navbar navbar-default">
+            {% if user.is_authenticated %}
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle">
@@ -125,11 +128,11 @@
                               </ul>
                         </li> -->
 						<li>
-                <a href="{% url 'add_payment' %}">
-								    <i class="ti-wallet"></i>
-								    <p>{% trans 'Nuevo pago' %}</p>
-                </a>
-            </li>
+                            <a href="{% url 'add_payment' %}">
+                                                <i class="ti-wallet"></i>
+                                                <p>{% trans 'Nuevo pago' %}</p>
+                            </a>
+                        </li>
 						<li>
                             <a href="{% url 'add-member' %}">
 								<i class="ti-user"></i>
@@ -146,6 +149,7 @@
 
                 </div>
             </div>
+            {% endif %}
         </nav>
 
         <div class="content">

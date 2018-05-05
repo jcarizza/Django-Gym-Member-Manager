@@ -14,8 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from django.contrib.auth.decorators import login_required
 from .views import CreatePaymentView
 
 urlpatterns = [
-    path('add', CreatePaymentView.as_view(), name='add_payment'),
+    path('new/',
+         login_required(CreatePaymentView.as_view()),
+         name='add_payment'
+         ),
 ]

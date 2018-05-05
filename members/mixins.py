@@ -6,7 +6,6 @@ from django.utils.translation import ugettext_lazy as _
 
 class PersonalDetailsMixin(models.Model):
     """Common personal details."""
-
     first_name = models.CharField(
         max_length=50,
         help_text=_('Nombre'))

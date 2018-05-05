@@ -41,8 +41,6 @@ class StaffMemberFactory(DjangoModelFactory):
 
     first_name = STAFF_MEMBER_FIRST_NAME
     last_name = STAFF_MEMBER_LAST_NAME
-    cellphone = STAFF_MEMBER_CELLPHONE
-    address = STAFF_MEMBER_ADDRESS
     email = STAFF_MEMBER_EMAIL
     is_owner = True
     gym = SubFactory(GymFactory)

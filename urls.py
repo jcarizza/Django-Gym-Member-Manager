@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from dashboard.views import DashboardView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,7 +27,8 @@ urlpatterns = [
     path('notifications/', include('notifications.urls')),
     path('reports/', include('reports.urls')),
     path('payments/', include('payments.urls')),
-    path('', include('accounts.urls'))
+    # path('', include('accounts.urls')),
+    path('', DashboardView.as_view(), name='dashboard'),
 ]
 
 # for handling profile photos

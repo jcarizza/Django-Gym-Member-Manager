@@ -6,7 +6,7 @@
 <form action="" method="post" class="form"> {% csrf_token %}
   {% bootstrap_form form %}
   {% buttons %}
-    <button type="submit" class="btn btn-primary">{% trans "Pagar" %}</button>
+    <button type="submit" class="btn btn-primary pull-right">{% trans "Pagar" %}</button>
   {% endbuttons %}
 </form>
 {% endblock %}

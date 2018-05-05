@@ -32,6 +32,8 @@ LOGIN_REDIRECT_URL = '/dashboard/'
 # After Logout
 LOGOUT_REDIRECT_URL = '/'
 
+AUTH_USER_MODEL = 'members.StaffMember'
+
 # Application definition
 
 INSTALLED_APPS = [
