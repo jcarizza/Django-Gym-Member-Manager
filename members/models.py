@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-class Gym(MembershipMixin):
+class Gym(models.Model):
     """A place, a gym."""
     name = models.CharField(
         max_length=100,
