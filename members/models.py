@@ -16,6 +16,7 @@ class Gym(models.Model):
         max_length=100,
         help_text=_('Dirección')
     )
+    registration_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.name}"
