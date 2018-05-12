@@ -1,0 +1,14 @@
+
+{% extends 'base.html' %}
+{% load bootstrap4 i18n %}
+
+{% block content %}
+<h1>Tu sugerencia <i class="ti-comments-smiley"></i></h1>
+<h3>{% trans "Contanos, ¿Que te gustaría que agreguemos en la próxima versión?" %}</h3>
+<form method="post" class="form"> {% csrf_token %}
+  {% bootstrap_form form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-primary pull-right">{% trans "Enviar" %}</button>
+  {% endbuttons %}
+</form>
+{% endblock %}

@@ -105,3 +105,14 @@ class Member(models.Model):
         max_length=9,
         unique=True
     )
+
+
+class Feedback(models.Model):
+    """An user send us a suggestion."""
+    text = models.TextField()
+    user = models.ForeignKey(StaffMember, on_delete=models.CASCADE)
+    on_date = models.DateTimeField(auto_now_add=True)
+    checked = models.NullBooleanField()
+
+    def __str__(self):
+        return f"{self.id}"  # pylint: disable=E1101

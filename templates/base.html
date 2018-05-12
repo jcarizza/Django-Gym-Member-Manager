@@ -74,18 +74,18 @@
                         <p>{% trans 'Miembros' %}</p>
                     </a>
                 </li>
-                <li id="activities">
-                    <a href="#">
+                <li id="send-feedback">
+                    <a href="{% url 'send-feedback' %}">
                         <i class="ti-agenda"></i>
-                        <p>{% trans 'Actividades' %}</p>
+                        <p>{% trans 'Tu Sugerencia' %}</p>
                     </a>
                 </li>
-                <li id="settings">
+                <!-- <li id="settings">
                     <a href="#">
                         <i class="ti-settings"></i>
                         <p>{% trans 'Configuración' %}</p>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
         {% endif %}
