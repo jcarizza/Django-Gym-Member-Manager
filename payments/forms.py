@@ -46,8 +46,22 @@ class AddPaymentWithDNIForm(forms.ModelForm):
                                        **self.cleaned_data)
 
 class AddPaymentForm(forms.ModelForm):
-    payment_period = forms.ChoiceField(choices=PAYMENT_PERIOD_CHOICES)
-    
+    add_payment = forms.BooleanField(required=False)
+    payment_period = forms.ChoiceField(choices=PAYMENT_PERIOD_CHOICES, required=False)
+    payment_amount = forms.FloatField(required=False)
+
     class Meta:
         model = Payments
-        fields = ('payment_period', 'payment_amount')
+        fields = ('add_payment', 'payment_period', 'payment_amount')
+        fields_order = ('payment_period', 'payment_amount', 'add_payment')
+
+    def clean(self):
+        add_payment = self.cleaned_data['add_payment']
+        import pdb;pdb.set_trace()  
+        if add_payment is True:
+            try:
+                amount = float(self.cleaned_data['payment_amount'])
+            except:
+                raise ValidationError(_('Amount is required'))
+            
+        return self.cleaned_data

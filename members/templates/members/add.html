@@ -11,3 +11,27 @@
   {% endbuttons %}
 </form>
 {% endblock %}
+
+
+{% block jsscripts %}
+<script>
+$(document).ready(function() {
+
+  $('#id_payment-add_payment').change(function(event) {
+      console.log($('#id_payment-add_payment:checked').length);
+      if ($('#id_payment-add_payment:checked').length > 0) {
+        $('#id_payment-payment_period')
+        .parent('.form-group').css({'display': 'block'});
+        $('#id_payment-payment_amount')
+        .parent('.form-group').css({'display': 'block'});
+      } else {
+        $('#id_payment-payment_period')
+        .parent('.form-group').css({'display': 'none'});
+        $('#id_payment-payment_amount')
+        .parent('.form-group').css({'display': 'none'});
+      }
+  });
+  $('#id_payment-add_payment').change();
+})
+</script>
+{% endblock %}

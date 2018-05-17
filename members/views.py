@@ -64,16 +64,24 @@ class AddMember(LoginRequiredMixin, View):
         payment_form = AddPaymentForm(request.POST,
                                       prefix=self.payment_prefix)
 
-        if member_form.is_valid() and payment_form.is_valid():
+        if member_form.is_valid():
             member = member_form.save(commit=False)
             member.gym = self.request.user.gym
-            member.save()
-            payment = payment_form.save(commit=False)
-            payment.user = member
-            payment.save()
+
+            if 'payment-add_payment' in request.POST:
+                if payment_form.is_valid():
+                    # Proces payment
+                    payment = payment_form.save(commit=False)
+                    member.save()
+                    payment.user = member
+                    payment.save()
+                return self.get_response()
+            else:
+                member.save()
+
             return HttpResponseRedirect(self.success_url)
-        else:
-            return self.get_response()
+
+        return self.get_response()
 
 
 
