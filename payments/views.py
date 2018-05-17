@@ -1,10 +1,10 @@
 from django.views.generic.edit import FormView
 
-from .forms import PaymentsForm
+from .forms import AddPaymentWithDNIForm
 
 
 class CreatePaymentView(FormView):
-    form_class = PaymentsForm
+    form_class = AddPaymentWithDNIForm
     template_name = 'add_payment.html'
     success_url = '/members'
 

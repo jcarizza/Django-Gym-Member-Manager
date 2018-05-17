@@ -4,7 +4,8 @@
 {% block content %}
 <h1>{% trans "Nuevo miembro del gym" %}</h1>
 <form action="" method="post" class="form"> {% csrf_token %}
-  {% bootstrap_form form %}
+  {% bootstrap_form member_form %}
+  {% bootstrap_form payment_form %}
   {% buttons %}
     <button type="submit" class="btn btn-primary pull-right">{% trans "Guardar" %}</button>
   {% endbuttons %}

@@ -37,9 +37,10 @@ class StaffMember(AbstractUser):
     )
     is_owner = models.NullBooleanField()
     email = models.EmailField(unique=True)
+    username = models.CharField(max_length=20, null=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['gym', 'is_owner', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['gym', 'is_owner', 'first_name', 'last_name', 'username']
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

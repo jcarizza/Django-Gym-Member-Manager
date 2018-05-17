@@ -24,7 +24,7 @@ PAYMENT_PERIOD_CHOICES = (
 )
 
 
-class PaymentsForm(forms.ModelForm):
+class AddPaymentWithDNIForm(forms.ModelForm):
     dni = forms.CharField()
     payment_period = forms.ChoiceField(choices=PAYMENT_PERIOD_CHOICES)
 
@@ -45,3 +45,9 @@ class PaymentsForm(forms.ModelForm):
                                        payment_date=datetime.datetime.now(),
                                        **self.cleaned_data)
 
+class AddPaymentForm(forms.ModelForm):
+    payment_period = forms.ChoiceField(choices=PAYMENT_PERIOD_CHOICES)
+    
+    class Meta:
+        model = Payments
+        fields = ('payment_period', 'payment_amount')

@@ -20,6 +20,6 @@ from .views import CreatePaymentView
 urlpatterns = [
     path('new/',
          login_required(CreatePaymentView.as_view()),
-         name='add_payment'
+         name='add-payment'
          ),
 ]
